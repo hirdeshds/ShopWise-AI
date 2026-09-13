@@ -1,7 +1,7 @@
 import json
 import logging
 from typing import Optional, Any, Dict
-from groq import Groq
+import cohere
 from app.config import settings
 from app.schemas import ProductOffer
 
@@ -34,12 +34,12 @@ Expected JSON format:
 """
 
 def extract_offer(platform: str, product_query: str, search_result: Dict[str, Any]) -> Optional[ProductOffer]:
-    if not settings.GROQ_API_KEY:
-        logger.warning("GROQ_API_KEY is missing, skipping extraction.")
+    if not settings.COHERE_API_KEY:
+        logger.warning("COHERE_API_KEY is missing, skipping extraction.")
         return None
 
-    client = Groq(api_key=settings.GROQ_API_KEY)
-    
+    client = cohere.ClientV2(api_key=settings.COHERE_API_KEY)
+
     title = search_result.get("title", "")
     url = search_result.get("url", "")
     content = search_result.get("content", "")
@@ -59,8 +59,8 @@ Extract the product offer details in JSON.
 """
 
     try:
-        response = client.chat.completions.create(
-            model=settings.GROQ_MODEL,
+        response = client.chat(
+            model=settings.COHERE_MODEL,
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_prompt}
@@ -68,14 +68,14 @@ Extract the product offer details in JSON.
             response_format={"type": "json_object"},
             temperature=0.0
         )
-        
-        raw_content = response.choices[0].message.content
+
+        raw_content = response.message.content[0].text
         if not raw_content or not raw_content.strip():
             logger.warning(f"Empty response from LLM for {platform}, skipping.")
             return None
         offer_data = json.loads(raw_content)
         offer = ProductOffer(**offer_data)
-        
+
         # override platform and evidence_url to ensure they match our search
         offer.platform = platform
         offer.evidence_url = url
