@@ -1,6 +1,6 @@
 import logging
 from typing import Dict, Any
-from duckduckgo_search import DDGS
+from ddgs import DDGS
 
 logger = logging.getLogger(__name__)
 
@@ -15,7 +15,7 @@ PLATFORMS = {
 def search_platforms(product_query: str) -> Dict[str, Any]:
     results_by_platform = {}
 
-    with DDGS() as ddgs:
+    with DDGS() as ddgs:  # noqa
         for platform_name, site_filter in PLATFORMS.items():
             query = f'{site_filter} "{product_query}" price buy'
             try:

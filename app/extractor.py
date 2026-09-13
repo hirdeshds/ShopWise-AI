@@ -1,5 +1,6 @@
 import json
 import logging
+import time
 from typing import Optional, Any, Dict
 import cohere
 from app.config import settings
@@ -58,28 +59,38 @@ Evidence Content: {content}
 Extract the product offer details in JSON.
 """
 
-    try:
-        response = client.chat(
-            model=settings.COHERE_MODEL,
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": user_prompt}
-            ],
-            response_format={"type": "json_object"},
-            temperature=0.0
-        )
+    MAX_RETRIES = 3
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            response = client.chat(
+                model=settings.COHERE_MODEL,
+                messages=[
+                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "user", "content": user_prompt}
+                ],
+                response_format={"type": "json_object"},
+                temperature=0.0
+            )
 
-        raw_content = response.message.content[0].text
-        if not raw_content or not raw_content.strip():
-            logger.warning(f"Empty response from LLM for {platform}, skipping.")
-            return None
-        offer_data = json.loads(raw_content)
-        offer = ProductOffer(**offer_data)
+            raw_content = response.message.content[0].text
+            if not raw_content or not raw_content.strip():
+                logger.warning(f"Empty response from LLM for {platform}, skipping.")
+                return None
+            offer_data = json.loads(raw_content)
+            offer = ProductOffer(**offer_data)
 
-        # override platform and evidence_url to ensure they match our search
-        offer.platform = platform
-        offer.evidence_url = url
-        return offer
-    except Exception as e:
-        logger.error(f"Failed to extract offer for {platform}: {e}")
-        return None
+            # override platform and evidence_url to ensure they match our search
+            offer.platform = platform
+            offer.evidence_url = url
+            return offer
+
+        except Exception as e:
+            err_str = str(e)
+            if "429" in err_str and attempt < MAX_RETRIES:
+                wait = 60 * attempt  # 60s, 120s ...
+                logger.warning(f"Rate limited by Cohere for {platform} (attempt {attempt}). Waiting {wait}s...")
+                time.sleep(wait)
+            else:
+                logger.error(f"Failed to extract offer for {platform}: {e}")
+                return None
+    return None
