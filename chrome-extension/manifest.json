@@ -2,48 +2,64 @@
   "manifest_version": 3,
   "name": "ShopWise AI",
   "version": "1.0.0",
-  "description": "AI-powered price comparison across Indian e-commerce platforms — Amazon, Flipkart, Croma, Reliance Digital & Vijay Sales.",
+  "description": "AI-powered shopping research and deal intelligence. Compare prices across Amazon, Flipkart, Croma, Reliance Digital and Vijay Sales.",
+
   "icons": {
     "16":  "icons/icon16.png",
     "48":  "icons/icon48.png",
     "128": "icons/icon128.png"
   },
+
   "action": {
     "default_popup": "popup.html",
-    "default_title": "ShopWise AI — Find Best Deals",
+    "default_title": "ShopWise AI",
     "default_icon": {
       "16":  "icons/icon16.png",
       "48":  "icons/icon48.png",
       "128": "icons/icon128.png"
     }
   },
+
   "background": {
     "service_worker": "background.js"
   },
+
   "content_scripts": [
     {
       "matches": [
         "*://*.amazon.in/*",
+        "*://*.amazon.com/*",
         "*://*.flipkart.com/*",
         "*://*.croma.com/*",
         "*://*.reliancedigital.in/*",
         "*://*.vijaysales.com/*",
         "*://*.myntra.com/*",
         "*://*.meesho.com/*",
-        "*://*.snapdeal.com/*"
+        "*://*.snapdeal.com/*",
+        "*://*.tatacliq.com/*"
       ],
       "js": ["content.js"],
       "run_at": "document_idle"
     }
   ],
+
+  "options_ui": {
+    "page": "settings.html",
+    "open_in_tab": true
+  },
+
   "permissions": [
     "storage",
     "activeTab",
-    "scripting"
+    "scripting",
+    "notifications"
   ],
+
   "host_permissions": [
     "http://localhost:8000/*",
+    "http://127.0.0.1:8000/*",
     "https://*.onrender.com/*",
-    "https://*.vercel.app/*"
+    "https://*.vercel.app/*",
+    "https://*.railway.app/*"
   ]
 }

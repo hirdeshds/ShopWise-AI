@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShopWise AI — Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="settings.css" />
+</head>
+<body>
+
+  <div class="page">
+
+    <!-- ── Header ── -->
+    <header class="s-header">
+      <div class="s-brand">
+        <img src="icons/icon48.png" alt="ShopWise AI" class="s-logo" />
+        <div>
+          <div class="s-title">ShopWise <span class="s-ai">AI</span></div>
+          <div class="s-sub">Extension Settings</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="s-main">
+
+      <!-- ── Connection Status ── -->
+      <section class="s-card" id="section-connection">
+        <h2 class="s-section-title">Backend Connection</h2>
+
+        <div class="s-field">
+          <label class="s-label" for="api-url">API URL</label>
+          <div class="s-input-row">
+            <input
+              type="url"
+              id="api-url"
+              class="s-input"
+              placeholder="http://localhost:8000"
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <button id="btn-test" class="btn-outline" aria-label="Test connection">
+              Test
+            </button>
+          </div>
+          <p class="s-hint">
+            Point to your running ShopWise AI backend. Default:
+            <code>http://localhost:8000</code>
+          </p>
+        </div>
+
+        <div id="connection-status" class="conn-status" aria-live="polite">
+          <div class="conn-dot" id="conn-dot"></div>
+          <span id="conn-text">Not tested</span>
+          <span id="conn-detail" class="conn-detail"></span>
+        </div>
+
+        <button id="btn-save" class="btn-primary" aria-label="Save settings">
+          Save Settings
+        </button>
+        <div id="save-feedback" class="save-feedback hidden" aria-live="polite"></div>
+      </section>
+
+      <!-- ── Supported Platforms ── -->
+      <section class="s-card">
+        <h2 class="s-section-title">Supported Platforms</h2>
+        <ul class="platform-list" role="list">
+          <li class="platform-item"><span class="platform-dot"></span>Amazon India (amazon.in)</li>
+          <li class="platform-item"><span class="platform-dot"></span>Flipkart (flipkart.com)</li>
+          <li class="platform-item"><span class="platform-dot"></span>Croma (croma.com)</li>
+          <li class="platform-item"><span class="platform-dot"></span>Reliance Digital (reliancedigital.in)</li>
+          <li class="platform-item"><span class="platform-dot"></span>Vijay Sales (vijaysales.com)</li>
+        </ul>
+      </section>
+
+      <!-- ── Data Management ── -->
+      <section class="s-card">
+        <h2 class="s-section-title">Data Management</h2>
+
+        <div class="data-row">
+          <div>
+            <div class="data-label">Search History</div>
+            <div class="data-desc">Last 10 searches</div>
+          </div>
+          <button id="btn-clear-history" class="btn-danger-outline" aria-label="Clear search history">
+            Clear
+          </button>
+        </div>
+
+        <div class="data-row">
+          <div>
+            <div class="data-label">Wishlist</div>
+            <div class="data-desc" id="wishlist-count">Loading…</div>
+          </div>
+          <button id="btn-clear-wishlist" class="btn-danger-outline" aria-label="Clear wishlist">
+            Clear
+          </button>
+        </div>
+
+        <div class="data-row">
+          <div>
+            <div class="data-label">Price Alerts</div>
+            <div class="data-desc" id="alerts-count">Loading…</div>
+          </div>
+          <button id="btn-clear-alerts" class="btn-danger-outline" aria-label="Clear all price alerts">
+            Clear
+          </button>
+        </div>
+
+        <div class="data-row">
+          <div>
+            <div class="data-label">All Extension Data</div>
+            <div class="data-desc">Reset everything to defaults</div>
+          </div>
+          <button id="btn-reset-all" class="btn-danger" aria-label="Reset all extension data">
+            Reset All
+          </button>
+        </div>
+      </section>
+
+      <!-- ── About ── -->
+      <section class="s-card">
+        <h2 class="s-section-title">About</h2>
+        <div class="about-grid">
+          <div class="about-row"><span class="about-key">Extension</span><span class="about-val">ShopWise AI</span></div>
+          <div class="about-row"><span class="about-key">Version</span><span class="about-val">1.0.0</span></div>
+          <div class="about-row"><span class="about-key">Manifest</span><span class="about-val">v3</span></div>
+          <div class="about-row"><span class="about-key">Backend</span><span class="about-val">FastAPI + Cohere LLM</span></div>
+          <div class="about-row"><span class="about-key">Search</span><span class="about-val">DuckDuckGo (no API key)</span></div>
+        </div>
+        <div class="cors-note">
+          <strong>CORS Note:</strong> The backend must allow
+          <code>chrome-extension://*</code> as an origin.
+          The <code>app/api.py</code> in this project already includes the correct
+          <code>CORSMiddleware</code> configuration.
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="settings.js"></script>
+</body>
+</html>
