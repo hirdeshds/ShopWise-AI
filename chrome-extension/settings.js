@@ -25,7 +25,7 @@ async function init() {
     "apiUrl", "wishlist", "priceAlerts"
   ]);
 
-  apiUrlInput.value = data.apiUrl || "http://localhost:8000";
+  apiUrlInput.value = data.apiUrl || "https://shopwise-ai-ls25.onrender.com";
 
   const wl = data.wishlist || [];
   const al = data.priceAlerts || [];

@@ -10,7 +10,7 @@
 "use strict";
 
 const DEFAULTS = {
-  apiUrl:        "http://localhost:8000",
+  apiUrl:        "https://shopwise-ai-ls25.onrender.com",
   searchHistory: [],
   wishlist:      [],
   priceAlerts:   [],

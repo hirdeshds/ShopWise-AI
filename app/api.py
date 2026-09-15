@@ -9,8 +9,9 @@ app = FastAPI(title="AI Shopping Research Agent")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "chrome-extension://*",   # Chrome extension (any extension ID)
-        "http://localhost:*",     # Local dev / Swagger UI
+        "chrome-extension://*",          # Chrome extension (any extension ID)
+        "https://shopwise-ai-ls25.onrender.com",  # Deployed Render backend
+        "http://localhost:*",            # Local dev / Swagger UI
         "http://127.0.0.1:*",
     ],
     allow_origin_regex=r"chrome-extension://.*",

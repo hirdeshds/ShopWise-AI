@@ -1,197 +1,330 @@
-# 🛒 ShopWise AI — Chrome Extension
+# ShopWise AI — Chrome Extension
 
-> A sleek Chrome browser extension for the **ShopWise AI** FastAPI backend.  
-> Compare prices across Indian e-commerce platforms instantly from your toolbar.
+> **AI Shopping Intelligence** — Compare prices across Indian e-commerce platforms, get explainable deal recommendations, track products, and set price alerts — all from your Chrome toolbar.
 
 ---
 
-## ✨ Features
+## Features
 
-### 🔍 AI-Powered Product Search
-Type any product query (e.g. *"iPhone 16 Pro 256GB"*, *"Samsung Galaxy S24"*) and the extension calls your ShopWise AI backend to search across **5 major Indian e-commerce platforms** simultaneously:
-
-| Platform | Domain |
+### Core AI Research
+| Feature | Description |
 |---|---|
-| 🛒 Amazon India | amazon.in |
-| 🛍️ Flipkart | flipkart.com |
-| 🔌 Croma | croma.com |
-| 📱 Reliance Digital | reliancedigital.in |
-| 🏪 Vijay Sales | vijaysales.com |
+| **Product Search** | Natural-language queries sent to the ShopWise AI backend |
+| **AI Recommendation** | Best overall deal selected by a weighted scoring formula |
+| **Explainable Recommendation** | Bullet-point breakdown of *why* a deal is recommended |
+| **Deal Score** | `confidence × 100` from the backend ranker (0–100) |
+| **Match Score** | LLM-assessed similarity between the listing and your query (0–100%) |
+| **Data Quality** | LLM-assessed reliability of the price evidence (0–100) |
+| **Effective Price** | Listed price + shipping cost, pre-computed by the backend |
+| **"Should I Buy This?"** | Verdict derived from Deal Score (Buy / Consider / Wait) |
+| **AI Source Evidence** | Raw text snippet the LLM used to extract the price |
 
----
-
-### 🏆 Best Deal Recommendation Card
-The extension prominently displays the **single best deal** selected by the AI ranking engine:
-- **Platform name** and full product title
-- **Effective price** (price + shipping) formatted in INR
-- **Confidence score** — how certain the AI is this is the right product
-- **AI reasoning** — a human-readable explanation for why this deal wins
-- **🛒 Buy Now** button — opens the listing directly in a new tab
-- **📋 Copy Deal** — copies all deal details to clipboard in one click
-
----
-
-### 📊 Full Offers Table
-Below the recommendation, see **all extracted offers** in a detailed table:
-
-| Column | Description |
+### Offer Comparison
+| Feature | Description |
 |---|---|
-| Platform | Which e-commerce site |
-| Price | Listed product price |
-| Ship | Shipping cost (Free if ₹0) |
-| Effective | Total price (price + shipping) |
-| Stock | In Stock / Out of Stock / Unknown |
-| Match | How well the listing matches your query (0–100%) |
-| ↗ Link | Direct link to view the live listing |
+| **All Offers Table** | Platform, Price, Shipping, Effective Price, Stock, Match%, Score |
+| **Best Offer Highlighting** | Cheapest effective price shown in green |
+| **Availability Status** | In Stock / Out of Stock / Unknown per platform |
+| **Direct Listing Links** | One-click ↗ to each platform's actual product page |
 
-The cheapest effective price is highlighted in **green**.
+### Browser Intelligence
+| Feature | Description |
+|---|---|
+| **Smart Page Detection** | Auto-detects product title on Amazon, Flipkart, Croma, Reliance Digital, Vijay Sales, Myntra, Meesho, Tata CLiQ |
+| **Auto Pre-fill** | Detected product pre-fills the search bar with one click |
+| **Natural Language Search** | Queries like "Best phone under ₹30000" passed directly to the AI |
+| **Search Suggestion Chips** | Quick-tap common query templates |
 
----
+### User Features
+| Feature | Description |
+|---|---|
+| **Search History** | Last 10 searches with deduplication, most-recent-first |
+| **Wishlist** | Save products for later; stored in `chrome.storage.local` |
+| **Price Alerts** | Set a target price; alerts stored locally with creation date |
+| **Copy Deal** | Copies full deal summary (title, platform, price, score, URL) to clipboard |
+| **Product Comparison** | Queue 2–5 products, run parallel searches, compare side-by-side |
 
-### 🕵️ Smart Page Detection
-When you visit a product page on **Amazon, Flipkart, Croma, Reliance Digital,** or **Vijay Sales**, the extension automatically detects the product name and shows a banner:
+### Settings
+| Feature | Description |
+|---|---|
+| **API URL Configuration** | Point to local dev or any deployed backend |
+| **Health Check** | Live connection test with status indicator |
+| **Data Management** | Clear history, wishlist, alerts, or all data |
 
-> 📦 Detected: Apple iPhone 16 Pro (256 GB) — Black Titanium  
-> [Use]
-
-Click **Use** to pre-fill the search bar instantly.
-
----
-
-### 📋 Search History
-The extension remembers your **last 10 searches** locally in your browser. Click any previous search to re-run it immediately. Clear history at any time with one click.
-
----
-
-### ⚙️ Configurable API URL
-Open **Settings** (⚙ icon) to set the backend URL:
-- Default: `http://localhost:8000` (local dev)
-- Change to your Render.com or any deployed URL for production use
-
----
-
-### ⏳ Animated Loading State
-Since the backend makes up to 10 LLM calls (~30 seconds), the extension shows:
-- A **spinning ring** animation
-- **Shimmer skeleton cards** while results load
-- Platform names being searched
+### Graceful Stubs (future backend features)
+| Feature | Status |
+|---|---|
+| Review Intelligence | UI stub — requires review data from backend |
+| Price History Chart | UI stub — requires price-history database |
+| Fake Review Signal | UI stub — requires authenticity signals from backend |
 
 ---
 
-### ❌ Smart Error Handling
-Clear, actionable error messages for common failure modes:
-- **Backend not running** — tells you exactly what command to run
-- **Rate limit (429)** — advises you to wait 60 seconds
-- **Server errors** — shows the HTTP status and detail message
-- **Retry button** — re-runs the last search without re-typing
-
----
-
-## 📁 Folder Structure
+## File Structure
 
 ```
 chrome-extension/
-├── manifest.json      # MV3 manifest — permissions, popup, content script
-├── popup.html         # Extension UI markup
-├── popup.css          # Dark glassmorphism styles + animations
-├── popup.js           # Full UI logic, API calls, history, copy
-├── content.js         # Auto-detects product on e-commerce pages
-├── background.js      # Service worker — defaults & message relay
+├── manifest.json      MV3 manifest — permissions, content scripts, options page
+├── popup.html         Main extension UI (4 views: main / wishlist / alerts / compare)
+├── popup.css          Dark glassmorphism design system
+├── popup.js           All UI logic, API calls, storage, state machine
+├── settings.html      Full settings page (opens in tab)
+├── settings.css       Settings styles
+├── settings.js        Health check, save URL, data management
+├── content.js         Product detection on 8+ shopping sites
+├── background.js      Service worker — defaults, message relay, badge
 ├── icons/
-│   ├── icon16.png     # 16×16  toolbar icon
-│   ├── icon48.png     # 48×48  extensions page icon
-│   └── icon128.png    # 128×128 Chrome Web Store icon
-└── README.md          # This file
+│   ├── icon16.png     16×16 toolbar icon
+│   ├── icon48.png     48×48 extensions page icon
+│   └── icon128.png    128×128 Chrome Web Store icon
+└── README.md          This file
 ```
 
 ---
 
-## 🚀 Installation (Developer Mode)
+## Installation
 
-> **Prerequisites:** Your ShopWise AI backend must be running.  
-> See the [main project README](../README.md) for setup instructions.
+### Step 1 — Start the ShopWise AI backend
 
-### Step 1 — Start the backend
 ```bash
 cd "ShopWise AI"
+
+# Install dependencies (first time only)
+pip install -r requirements.txt
+
+# Start the development server
 uvicorn app.api:app --reload
-# API available at http://127.0.0.1:8000
 ```
+
+The API will be available at `http://127.0.0.1:8000`.  
+Swagger docs: `http://127.0.0.1:8000/docs`
 
 ### Step 2 — Load the extension in Chrome
 
 1. Open Chrome and navigate to `chrome://extensions`
-2. Enable **Developer mode** (toggle in the top-right corner)
+2. Enable **Developer mode** using the toggle in the top-right corner
 3. Click **Load unpacked**
-4. Select the `chrome-extension/` folder from this project
+4. Select the `chrome-extension/` folder inside the `ShopWise AI` project
 5. The ShopWise AI icon will appear in your Chrome toolbar
+6. Click **Pin** (📌) to always show it
 
-### Step 3 — Configure the API URL *(optional)*
+### Step 3 — Configure the API URL (optional)
 
-If using a deployed backend (e.g. Render):
-1. Click the ShopWise AI icon in the toolbar
-2. Click ⚙ **Settings**
-3. Enter your deployed API URL (e.g. `https://shopwise-ai.onrender.com`)
+The default API URL is `http://localhost:8000`.
+
+To use a deployed backend (e.g. Render.com):
+
+1. Right-click the extension icon → **Options**, or click ⚙ in the popup header
+2. Enter your deployed URL (e.g. `https://shopwise-ai.onrender.com`)
+3. Click **Test** to verify the connection
 4. Click **Save Settings**
 
 ---
 
-## 🔑 Permissions Explained
+## API Reference
 
-| Permission | Why it's needed |
-|---|---|
-| `storage` | Save API URL and search history locally |
-| `activeTab` | Read current tab for smart product detection |
-| `scripting` | Inject content script to extract product names |
-| Host permissions | Allow fetch calls to your API URL |
+The extension communicates exclusively with one endpoint:
 
-> **Privacy:** All data stays on your device. No data is sent to any third party. The extension only communicates with the ShopWise AI backend you configure.
+### `POST /research`
+
+**Request:**
+```json
+{
+  "product": "iPhone 16 Pro 256GB India"
+}
+```
+
+**Response:**
+```json
+{
+  "product_request": "iPhone 16 Pro 256GB India",
+  "searched_at": "2026-09-15T12:00:00Z",
+  "offers": [
+    {
+      "platform": "Amazon India",
+      "title": "Apple iPhone 16 Pro (256 GB) - Black Titanium",
+      "price": 119900.0,
+      "currency": "INR",
+      "shipping": 0.0,
+      "effective_price": 119900.0,
+      "availability": "in_stock",
+      "match_score": 0.97,
+      "evidence_score": 0.92,
+      "evidence_url": "https://www.amazon.in/...",
+      "evidence": "Apple iPhone 16 Pro 256GB... ₹1,19,900..."
+    }
+  ],
+  "recommendation": {
+    "platform": "Flipkart",
+    "title": "Apple iPhone 16 Pro (256 GB)",
+    "effective_price": 118999.0,
+    "currency": "INR",
+    "reason": "Lowest effective price among high-confidence matching offers.",
+    "confidence": 0.94,
+    "evidence_url": "https://www.flipkart.com/..."
+  }
+}
+```
+
+> **Note:** `recommendation.confidence` is the Deal Score (multiply by 100 to get `/100` display).  
+> `offers[].match_score` is the Match Score (multiply by 100 for %).
 
 ---
 
-## 🛠 Tech Stack
+## Testing Guide
 
-| Layer | Technology |
-|---|---|
-| Extension API | Chrome MV3 (Manifest Version 3) |
-| UI | Vanilla HTML + CSS + JavaScript |
-| Styling | Dark glassmorphism, CSS custom properties, Inter font |
-| Storage | `chrome.storage.local` |
-| Backend | ShopWise AI FastAPI server |
-| Search | DuckDuckGo (via backend) |
-| LLM | Cohere command-r-plus (via backend) |
+### Test: Basic search
+1. Open the popup
+2. Type `iPhone 15 128GB` in the search bar
+3. Click **Find Best Deal**
+4. Verify: loading messages cycle, results appear with a Best Deal card
+
+### Test: Natural language search
+1. Click the chip `Phone ₹30k camera`
+2. Verify: query fills the search bar and search starts
+
+### Test: Smart page detection
+1. Navigate to any Amazon.in or Flipkart.com product page
+2. Open the popup
+3. Verify: the detected product banner appears at the top
+4. Click **Use** to pre-fill the search bar
+
+### Test: Wishlist
+1. Search for a product and get results
+2. Click the ♡ icon on the Best Deal card
+3. Click the ♡ icon in the header → verify the product appears
+
+### Test: Price Alert
+1. Search for a product and get results
+2. Click the 🔔 icon on the Best Deal card
+3. Enter a target price lower than the current price
+4. Click **Set Alert** → verify the bell icon in the header shows a badge
+5. Open the alerts view to confirm the alert was saved
+
+### Test: Product Comparison
+1. Type a product name, click the + button (Add to Compare)
+2. Type another product name, click + again
+3. Open the compare view (⚖ icon in header)
+4. Click **Compare All Products**
+
+### Test: Settings
+1. Click ⚙ to open Settings
+2. Change the API URL to an invalid URL
+3. Click **Test** — verify "Unable to connect" appears
+4. Restore the correct URL and click **Test** again — verify "Connected"
+
+### Test: API errors
+1. Stop the backend server
+2. Search for any product
+3. Verify: actionable error message appears explaining the backend is not running
 
 ---
 
-## ⚠️ Known Limitations
+## CORS Configuration
 
-| Issue | Detail |
-|---|---|
-| Slow results | Backend takes ~30s (10 LLM calls × 3s sleep). Loading animation is shown. |
-| Localhost only by default | Change API URL in Settings for deployed backends |
-| Content script detection | Works best on product detail pages, not category/search pages |
-| Rate limits | Cohere free tier: ~5 req/min. Backend retries automatically. |
-| CORS | If using a custom backend, ensure `CORS` is enabled in `app/api.py` |
-
----
-
-## 🔧 Enabling CORS on the Backend
-
-If you access the backend from the extension, add CORS middleware to `app/api.py`:
+The backend (`app/api.py`) must allow the Chrome extension origin.  
+This project already includes the correct configuration:
 
 ```python
 from fastapi.middleware.cors import CORSMiddleware
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["chrome-extension://*"],
-    allow_methods=["POST", "GET"],
-    allow_headers=["Content-Type"],
+    allow_origins=[
+        "chrome-extension://*",
+        "http://localhost:*",
+        "http://127.0.0.1:*",
+    ],
+    allow_origin_regex=r"chrome-extension://.*",
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type", "Accept"],
 )
 ```
 
+For production deployments, replace `chrome-extension://*` with your specific extension ID (found in `chrome://extensions`) to be more restrictive.
+
 ---
 
-## 📜 License
+## Troubleshooting
 
-This extension is part of the **ShopWise AI** project. See the root `LICENSE` file for details.
+### CORS errors in the browser console
+**Symptom:** `Access-Control-Allow-Origin` error  
+**Fix:** Ensure `app/api.py` has the CORS middleware shown above and restart the backend.
+
+### "Cannot reach ShopWise AI" error
+**Symptom:** Connection error popup  
+**Fix:**  
+1. Check the backend is running: `uvicorn app.api:app --reload`  
+2. Open Settings and verify the API URL is `http://localhost:8000`  
+3. Click **Test** to confirm the connection
+
+### Wrong API URL after deployment
+**Fix:** Open Settings → update the URL → click Save → click Test.
+
+### No results returned
+**Symptom:** "No qualifying deals found" state  
+**Fix:** Use a more specific query (include brand, model, storage capacity). DuckDuckGo may not have found price data for this query.
+
+### Content script not detecting product
+**Symptom:** No detected-product banner appears on product pages  
+**Fix:**  
+1. Reload the extension after any changes (`chrome://extensions` → Reload)  
+2. Refresh the product page
+3. The extension only injects on supported domains — check the `manifest.json` matches list
+
+### Extension needs to be reloaded after code changes
+After editing any extension file:  
+1. Go to `chrome://extensions`  
+2. Click **Reload** (↻) on the ShopWise AI card  
+3. Close and reopen the popup
+
+### Slow responses (~30 seconds)
+This is expected. The backend makes up to 10 sequential LLM calls with 3-second delays.  
+The loading screen cycles through progress messages while you wait.
+
+---
+
+## Security Notes
+
+- No API keys are stored in the extension
+- No user data is sent to any third party
+- All storage uses `chrome.storage.local` (device-only)
+- `innerHTML` is used only with `escHtml()`-escaped content
+- `eval()` is never used
+- Content Security Policy is enforced by Manifest V3
+
+---
+
+## Permissions Explained
+
+| Permission | Why |
+|---|---|
+| `storage` | Save API URL, history, wishlist, alerts locally |
+| `activeTab` | Read current tab for product detection |
+| `scripting` | Inject content script into product pages |
+| `notifications` | Reserved for future price-drop push notifications |
+| `host_permissions` | Allow fetch calls to the configured backend URL |
+
+---
+
+## Backend Assumptions
+
+The extension is built against the exact schema defined in `app/schemas.py`:
+
+| Field | Used for |
+|---|---|
+| `recommendation.confidence` | Deal Score (`× 100 → /100`) |
+| `offers[].match_score` | Match percentage displayed in table and card |
+| `offers[].evidence_score` | Data Quality score; also used as table "Score" column |
+| `offers[].evidence` | Shown in AI Source Evidence accordion |
+| `recommendation.reason` | Shown verbatim in Best Deal card |
+| `recommendation.evidence_url` | Buy Now button href |
+
+Features **not implemented** (backend does not provide this data):
+- Review intelligence / sentiment
+- Price history / price trend chart
+- Fake review authenticity signals
+- Seller rating scores
+- Return policy information
+
+These appear as clearly-labelled "Coming Soon" stubs in the UI. **No data is fabricated.**

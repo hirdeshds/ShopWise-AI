@@ -11,193 +11,334 @@
 </head>
 <body>
 
-  <!-- ══════════ HEADER ══════════ -->
-  <header class="header">
-    <div class="logo-wrap">
-      <img src="icons/icon48.png" alt="ShopWise AI Logo" class="logo-img" />
-      <div class="logo-text">
-        <span class="logo-title">ShopWise <span class="logo-ai">AI</span></span>
-        <span class="logo-sub">Best Deals · India</span>
-      </div>
+<!-- ╔══════════════════════════════════════════════════════╗ -->
+<!-- ║                HEADER (always visible)              ║ -->
+<!-- ╚══════════════════════════════════════════════════════╝ -->
+<header class="header" id="app-header">
+  <div class="brand">
+    <img src="icons/icon48.png" alt="ShopWise AI" class="brand-logo" />
+    <div class="brand-text">
+      <span class="brand-name">ShopWise <span class="brand-ai">AI</span></span>
+      <span class="brand-tagline">AI Shopping Intelligence</span>
     </div>
-    <button id="btn-settings" class="icon-btn" title="Settings" aria-label="Settings">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-      </svg>
+  </div>
+  <div class="header-actions">
+    <button id="btn-wishlist-tab" class="tab-btn" title="Wishlist" aria-label="Wishlist">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <span id="wishlist-badge" class="tab-badge hidden"></span>
     </button>
-  </header>
+    <button id="btn-alerts-tab" class="tab-btn" title="Price Alerts" aria-label="Price Alerts">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span id="alerts-badge" class="tab-badge hidden"></span>
+    </button>
+    <button id="btn-compare-tab" class="tab-btn" title="Compare Products" aria-label="Compare Products">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="18"/><rect x="14" y="3" width="7" height="18"/></svg>
+      <span id="compare-badge" class="tab-badge hidden"></span>
+    </button>
+    <button id="btn-settings-open" class="tab-btn" title="Settings" aria-label="Settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
+  </div>
+</header>
 
-  <!-- ══════════ MAIN VIEW ══════════ -->
-  <main id="view-main" class="view active">
+<!-- ╔══════════════════════════════════════════════════════╗ -->
+<!-- ║              MAIN VIEW (search + results)            ║ -->
+<!-- ╚══════════════════════════════════════════════════════╝ -->
+<div id="view-main" class="view active">
 
-    <!-- Search Bar -->
-    <div class="search-wrap">
-      <div class="search-box">
-        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
-        <input
-          id="search-input"
-          type="text"
-          placeholder="Search any product… e.g. iPhone 16 Pro"
-          autocomplete="off"
-          spellcheck="false"
-        />
-        <button id="btn-clear-search" class="clear-btn" title="Clear" aria-label="Clear search">✕</button>
-      </div>
-      <button id="btn-search" class="btn-primary">
-        <span class="btn-label">Find Best Deal</span>
-        <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+  <!-- ── Search Bar ── -->
+  <div class="search-section">
+    <!-- Detected product banner -->
+    <div id="detected-banner" class="detected-banner hidden" role="alert">
+      <span class="detected-label">Detected on page</span>
+      <span id="detected-name" class="detected-name"></span>
+      <button id="btn-use-detected" class="btn-use" aria-label="Use detected product">Use</button>
+      <button id="btn-dismiss-detected" class="btn-dismiss" aria-label="Dismiss detected product">✕</button>
+    </div>
+
+    <div class="search-box" role="search">
+      <label for="search-input" class="visually-hidden">Search products</label>
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input
+        id="search-input"
+        type="search"
+        placeholder='Search any product or ask AI…'
+        autocomplete="off"
+        spellcheck="false"
+        aria-label="Search products"
+      />
+    </div>
+
+    <div class="search-actions">
+      <button id="btn-search" class="btn-primary" aria-label="Find best deal">
+        Find Best Deal
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
           <polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/>
         </svg>
       </button>
-    </div>
-
-    <!-- Detected Banner -->
-    <div id="detected-banner" class="detected-banner hidden">
-      <span class="detected-icon">🕵️</span>
-      <span id="detected-text" class="detected-text"></span>
-      <button id="btn-use-detected" class="btn-use">Use</button>
-    </div>
-
-    <!-- Search History -->
-    <div id="history-wrap" class="history-wrap">
-      <div class="history-header">
-        <span class="section-label">Recent Searches</span>
-        <button id="btn-clear-history" class="link-btn">Clear</button>
-      </div>
-      <div id="history-list" class="history-list"></div>
-    </div>
-
-    <!-- ── Loading State ── -->
-    <div id="loading-state" class="loading-state hidden">
-      <div class="spinner-ring"></div>
-      <p class="loading-title">Researching across platforms…</p>
-      <p class="loading-sub">Querying Amazon · Flipkart · Croma · Reliance Digital · Vijay Sales</p>
-      <div class="shimmer-cards">
-        <div class="shimmer-card"></div>
-        <div class="shimmer-card"></div>
-        <div class="shimmer-card"></div>
-      </div>
-    </div>
-
-    <!-- ── Error State ── -->
-    <div id="error-state" class="error-state hidden">
-      <div class="error-icon">⚠️</div>
-      <p id="error-title" class="error-title">Something went wrong</p>
-      <p id="error-msg" class="error-msg"></p>
-      <button id="btn-retry" class="btn-primary btn-sm">Retry</button>
-    </div>
-
-    <!-- ── Results ── -->
-    <div id="results-state" class="results-state hidden">
-
-      <!-- Recommendation Card -->
-      <div id="recommendation-card" class="rec-card hidden">
-        <div class="rec-badge">🏆 Best Deal</div>
-        <div class="rec-platform" id="rec-platform"></div>
-        <div class="rec-title" id="rec-title"></div>
-        <div class="rec-price-row">
-          <span class="rec-price" id="rec-price"></span>
-          <span class="rec-confidence" id="rec-confidence"></span>
-        </div>
-        <p class="rec-reason" id="rec-reason"></p>
-        <div class="rec-actions">
-          <a id="btn-buy-now" href="#" target="_blank" rel="noopener noreferrer" class="btn-primary btn-buy">
-            🛒 Buy Now
-          </a>
-          <button id="btn-copy-deal" class="btn-secondary">
-            📋 Copy Deal
-          </button>
-        </div>
-      </div>
-
-      <!-- No recommendation notice -->
-      <div id="no-rec-notice" class="no-rec-notice hidden">
-        <span>😕</span>
-        <p>No qualifying deals found. Try a more specific query.</p>
-      </div>
-
-      <!-- Offers Table -->
-      <div id="offers-section" class="offers-section hidden">
-        <div class="offers-header">
-          <span class="section-label">All Offers</span>
-          <span id="offers-count" class="offers-count"></span>
-        </div>
-        <div class="table-wrap">
-          <table class="offers-table" id="offers-table">
-            <thead>
-              <tr>
-                <th>Platform</th>
-                <th>Price</th>
-                <th>Ship</th>
-                <th>Effective</th>
-                <th>Stock</th>
-                <th>Match</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="offers-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Meta -->
-      <div class="result-meta">
-        <span id="searched-at" class="meta-text"></span>
-      </div>
-
-    </div>
-
-  </main>
-
-  <!-- ══════════ SETTINGS VIEW ══════════ -->
-  <div id="view-settings" class="view settings-view">
-    <div class="settings-header">
-      <button id="btn-back" class="icon-btn" aria-label="Back">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="15 18 9 12 15 6"/>
+      <button id="btn-add-compare" class="btn-secondary" title="Add to Compare Queue" aria-label="Add to compare queue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
         </svg>
       </button>
-      <h2 class="settings-title">Settings</h2>
-    </div>
-
-    <div class="settings-body">
-      <div class="setting-group">
-        <label class="setting-label" for="api-url-input">Backend API URL</label>
-        <input
-          id="api-url-input"
-          class="setting-input"
-          type="url"
-          placeholder="http://localhost:8000"
-        />
-        <p class="setting-hint">
-          Point this to your locally running server or your deployed Render URL.<br/>
-          Default: <code>http://localhost:8000</code>
-        </p>
-      </div>
-
-      <button id="btn-save-settings" class="btn-primary">Save Settings</button>
-      <div id="save-msg" class="save-msg hidden">✅ Settings saved!</div>
-
-      <div class="setting-group" style="margin-top:24px;">
-        <span class="setting-label">Supported Platforms</span>
-        <ul class="platform-list">
-          <li>🛒 Amazon India</li>
-          <li>🛍️ Flipkart</li>
-          <li>🔌 Croma</li>
-          <li>📱 Reliance Digital</li>
-          <li>🏪 Vijay Sales</li>
-        </ul>
-      </div>
-
-      <div class="setting-group">
-        <span class="setting-label">Extension Version</span>
-        <span class="setting-value">1.0.0</span>
-      </div>
     </div>
   </div>
 
-  <script src="popup.js"></script>
+  <!-- ── AI Hint Chips ── -->
+  <div class="hint-chips" id="hint-chips" aria-label="Search suggestions">
+    <button class="chip" data-query="Best laptop under ₹60000 for students">Laptop under ₹60k</button>
+    <button class="chip" data-query="Best phone under ₹30000 with good camera">Phone ₹30k camera</button>
+    <button class="chip" data-query="Best wireless earbuds under ₹5000">Earbuds ₹5k</button>
+    <button class="chip" data-query="Best gaming mouse under ₹3000">Gaming mouse</button>
+  </div>
+
+  <!-- ── Search History ── -->
+  <div id="history-section" class="history-section hidden">
+    <div class="section-header">
+      <span class="section-label">Recent Searches</span>
+      <button id="btn-clear-history" class="link-btn" aria-label="Clear search history">Clear</button>
+    </div>
+    <div id="history-list" class="history-list" role="list" aria-label="Recent searches"></div>
+  </div>
+
+  <!-- ══ LOADING STATE ══ -->
+  <div id="state-loading" class="state hidden" aria-live="polite" aria-label="Loading results">
+    <div class="loading-ring" aria-hidden="true">
+      <div class="ring-inner"></div>
+    </div>
+    <p id="loading-msg" class="loading-msg">Researching products…</p>
+    <p class="loading-sub">Amazon · Flipkart · Croma · Reliance Digital · Vijay Sales</p>
+    <div class="shimmer-stack" aria-hidden="true">
+      <div class="shimmer-item"></div>
+      <div class="shimmer-item"></div>
+      <div class="shimmer-item short"></div>
+    </div>
+  </div>
+
+  <!-- ══ ERROR STATE ══ -->
+  <div id="state-error" class="state hidden" role="alert">
+    <div class="error-emoji" aria-hidden="true">⚠️</div>
+    <h3 id="error-title" class="error-title">Something went wrong</h3>
+    <p id="error-body" class="error-body"></p>
+    <button id="btn-retry" class="btn-primary btn-sm" aria-label="Retry search">Retry</button>
+  </div>
+
+  <!-- ══ NO RESULTS STATE ══ -->
+  <div id="state-no-results" class="state hidden" role="status">
+    <div class="no-res-icon" aria-hidden="true">🔍</div>
+    <h3 class="no-res-title">No qualifying deals found</h3>
+    <p class="no-res-body">Try a more specific product name, include the brand or model number.</p>
+  </div>
+
+  <!-- ══ RESULTS STATE ══ -->
+  <div id="state-results" class="state hidden">
+
+    <!-- Product header -->
+    <div class="results-product-header">
+      <span class="results-label">Results for</span>
+      <span id="results-query" class="results-query"></span>
+      <span id="results-timestamp" class="results-timestamp"></span>
+    </div>
+
+    <!-- ── Best Deal Card ── -->
+    <div id="best-deal-card" class="best-deal-card" aria-label="Best deal recommendation">
+      <div class="deal-header">
+        <span class="deal-badge">🏆 Best Deal</span>
+        <div class="deal-scores">
+          <span id="deal-score" class="score-pill deal-score" title="Deal Score"></span>
+          <span id="deal-confidence" class="score-pill conf-score" title="AI Confidence"></span>
+        </div>
+      </div>
+
+      <div class="deal-platform" id="deal-platform"></div>
+      <div class="deal-title" id="deal-title"></div>
+
+      <div class="deal-pricing">
+        <div class="deal-price-block">
+          <span class="deal-price-label">Effective Price</span>
+          <span id="deal-eff-price" class="deal-eff-price"></span>
+        </div>
+        <div id="deal-match-wrap" class="deal-match-wrap">
+          <span class="deal-price-label">Match</span>
+          <span id="deal-match" class="deal-match"></span>
+        </div>
+      </div>
+
+      <!-- Should I buy this? -->
+      <div id="buy-verdict" class="buy-verdict" aria-label="AI purchase verdict"></div>
+
+      <!-- Explanation bullets -->
+      <div id="deal-why" class="deal-why" aria-label="Why this deal is recommended">
+        <div class="why-label">Why this deal?</div>
+        <ul id="deal-why-list" class="why-list" role="list"></ul>
+      </div>
+
+      <div class="deal-reason" id="deal-reason"></div>
+
+      <div class="deal-actions">
+        <a id="btn-buy-now" href="#" target="_blank" rel="noopener noreferrer"
+           class="btn-primary btn-buy" aria-label="Buy now">
+          Buy Now
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+            <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+        </a>
+        <button id="btn-save-wishlist" class="btn-icon-action" title="Save to Wishlist" aria-label="Save to wishlist">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+        <button id="btn-set-alert" class="btn-icon-action" title="Set Price Alert" aria-label="Set price alert">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </button>
+        <button id="btn-copy-deal" class="btn-icon-action" title="Copy Deal" aria-label="Copy deal details">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Price Alert Modal ── -->
+    <div id="alert-modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Set price alert">
+      <div class="modal-card">
+        <div class="modal-title">Set Price Alert</div>
+        <div class="modal-field">
+          <label class="modal-label" for="alert-current-price">Current Price</label>
+          <div id="alert-current-price" class="modal-value"></div>
+        </div>
+        <div class="modal-field">
+          <label class="modal-label" for="alert-target-input">Target Price (₹)</label>
+          <input type="number" id="alert-target-input" class="modal-input"
+                 placeholder="e.g. 45000" min="0" step="100"
+                 aria-label="Target price" />
+        </div>
+        <div class="modal-actions">
+          <button id="btn-alert-confirm" class="btn-primary btn-sm" aria-label="Confirm price alert">Set Alert</button>
+          <button id="btn-alert-cancel"  class="btn-ghost btn-sm"   aria-label="Cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Offers Table ── -->
+    <div class="offers-section">
+      <div class="section-header">
+        <span class="section-label">All Offers</span>
+        <span id="offers-count" class="count-pill" aria-label="Number of offers"></span>
+      </div>
+      <div class="table-scroll" role="region" aria-label="Offers comparison table">
+        <table class="offers-table" id="offers-table">
+          <thead>
+            <tr>
+              <th scope="col">Platform</th>
+              <th scope="col">Price</th>
+              <th scope="col">Shipping</th>
+              <th scope="col">Effective</th>
+              <th scope="col">Stock</th>
+              <th scope="col">Match</th>
+              <th scope="col">Score</th>
+              <th scope="col" aria-label="Link"></th>
+            </tr>
+          </thead>
+          <tbody id="offers-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── Evidence (AI Source) ── -->
+    <details class="evidence-details" id="evidence-wrap">
+      <summary class="evidence-summary">AI Source Evidence</summary>
+      <div id="evidence-text" class="evidence-text"></div>
+    </details>
+
+    <!-- ── Review Intelligence Stub ── -->
+    <div class="stub-section">
+      <div class="stub-header">
+        <span class="stub-icon" aria-hidden="true">⭐</span>
+        <span class="stub-title">Review Intelligence</span>
+        <span class="stub-tag">Coming Soon</span>
+      </div>
+      <p class="stub-body">
+        Review analysis, sentiment scoring, and fake review signals require additional
+        backend integration. This feature is planned for a future release.
+      </p>
+    </div>
+
+    <!-- ── Price History Stub ── -->
+    <div class="stub-section">
+      <div class="stub-header">
+        <span class="stub-icon" aria-hidden="true">📈</span>
+        <span class="stub-title">Price History</span>
+        <span class="stub-tag">Coming Soon</span>
+      </div>
+      <p class="stub-body">
+        Historical price tracking requires a price-history database. When available,
+        this panel will show price trends, lowest observed price, and average price.
+      </p>
+    </div>
+
+  </div><!-- /state-results -->
+
+</div><!-- /view-main -->
+
+<!-- ╔══════════════════════════════════════════════════════╗ -->
+<!-- ║                    WISHLIST VIEW                     ║ -->
+<!-- ╚══════════════════════════════════════════════════════╝ -->
+<div id="view-wishlist" class="view hidden">
+  <div class="view-header">
+    <button class="btn-back" data-target="view-main" aria-label="Back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <h2 class="view-title">Wishlist</h2>
+  </div>
+  <div id="wishlist-empty" class="empty-state hidden">
+    <span class="empty-icon" aria-hidden="true">🤍</span>
+    <p class="empty-text">Your wishlist is empty.</p>
+    <p class="empty-hint">Save products from search results to track them here.</p>
+  </div>
+  <div id="wishlist-list" class="item-list" role="list" aria-label="Wishlist items"></div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════╗ -->
+<!-- ║                PRICE ALERTS VIEW                     ║ -->
+<!-- ╚══════════════════════════════════════════════════════╝ -->
+<div id="view-alerts" class="view hidden">
+  <div class="view-header">
+    <button class="btn-back" data-target="view-main" aria-label="Back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <h2 class="view-title">Price Alerts</h2>
+  </div>
+  <div id="alerts-empty" class="empty-state hidden">
+    <span class="empty-icon" aria-hidden="true">🔔</span>
+    <p class="empty-text">No price alerts set.</p>
+    <p class="empty-hint">Set a target price on any search result to be notified when it drops.</p>
+  </div>
+  <div id="alerts-list" class="item-list" role="list" aria-label="Price alerts"></div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════╗ -->
+<!-- ║               COMPARE PRODUCTS VIEW                  ║ -->
+<!-- ╚══════════════════════════════════════════════════════╝ -->
+<div id="view-compare" class="view hidden">
+  <div class="view-header">
+    <button class="btn-back" data-target="view-main" aria-label="Back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <h2 class="view-title">Compare Products</h2>
+    <button id="btn-clear-compare" class="link-btn" aria-label="Clear compare queue">Clear</button>
+  </div>
+  <div id="compare-empty" class="empty-state hidden">
+    <span class="empty-icon" aria-hidden="true">⚖️</span>
+    <p class="empty-text">No products to compare.</p>
+    <p class="empty-hint">Use the + button next to Search to add products to the compare queue.</p>
+  </div>
+  <div id="compare-list" class="compare-list" aria-label="Products to compare"></div>
+  <button id="btn-run-compare" class="btn-primary btn-full hidden" aria-label="Compare all products">
+    Compare All Products
+  </button>
+  <div id="compare-results" class="compare-results hidden" aria-label="Comparison table"></div>
+</div>
+
+<script src="popup.js"></script>
 </body>
 </html>
